@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ortho-masker"
+name = "orthomasker"
 version = "0.1.0"
 description = "CLI tool to convert TIF files to GeoJSON with automatic mask generation using Meta AI's Segment Anything Model (SAM)"
 readme = "README.md"
@@ -55,12 +55,12 @@ ml = [
 ]
 
 [project.scripts]
-ortho-masker = "ortho-masker.cli:main"
+orthomasker = "orthomasker.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/nickmccarty/ortho-masker"
-Repository = "https://github.com/nickmccarty/ortho-masker"
-Issues = "https://github.com/nickmccarty/ortho-masker/issues"
+Homepage = "https://github.com/nickmccarty/orthomasker"
+Repository = "https://github.com/nickmccarty/orthomasker"
+Issues = "https://github.com/nickmccarty/orthomasker/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -79,4 +79,4 @@ disallow_untyped_defs = true
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
-addopts = "--cov=src/ortho-masker --cov-report=html --cov-report=term-missing"
+addopts = "--cov=src/orthomasker --cov-report=html --cov-report=term-missing"
