@@ -1,0 +1,18 @@
+# Core dependencies for tif2geojson
+GDAL==3.8.4
+geopandas==1.0.1
+matplotlib==3.10.0
+numpy==2.0.2
+opencv-contrib-python==4.11.0.86
+opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
+pandas==2.2.2
+pillow==11.2.1
+rasterio==1.4.3
+shapely==2.1.1
+
+# PyTorch (CUDA 12.4 version)
+torch @ https://download.pytorch.org/whl/cu124/torch-2.6.0%2Bcu124-cp311-cp311-linux_x86_64.whl
+
+# Segment Anything Model
+segment_anything @ git+https://github.com/facebookresearch/segment-anything.git@dca509fe793f601edb92606367a655c15ac00fdf

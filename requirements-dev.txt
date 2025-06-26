@@ -1,0 +1,10 @@
+# Install main dependencies
+-r requirements.txt
+
+# Development dependencies
+-e .[dev]
+
+# Additional development tools
+pre-commit>=3.0.0
+jupyter>=1.0.0
+openpyxl==3.1.5

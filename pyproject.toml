@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tif2geojson"
+version = "0.1.0"
+description = "CLI tool to convert TIF files to GeoJSON with automatic mask generation"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Nicholas McCarty", email = "nick@upskilled.consulting"}
+]
+keywords = ["gis", "geojson", "tif", "mask", "cli"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "click>=8.0.0",
+    "GDAL>=3.8.0",
+    "geopandas>=1.0.0",
+    "matplotlib>=3.10.0",
+    "numpy>=2.0.0",
+    "opencv-contrib-python>=4.11.0",
+    "opencv-python>=4.11.0",
+    "opencv-python-headless>=4.11.0",
+    "pandas>=2.2.0",
+    "pillow>=11.2.0",
+    "rasterio>=1.4.0",
+    "shapely>=2.1.0",
+    "geojson>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "openpyxl>=3.1.0",
+]
+ml = [
+    "torch",
+    "segment_anything @ git+https://github.com/facebookresearch/segment-anything.git@dca509fe793f601edb92606367a655c15ac00fdf",
+]
+
+[project.scripts]
+tif2geojson = "tif2geojson.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/nickmccarty/tif2geojson"
+Repository = "https://github.com/nickmccarty/tif2geojson"
+Issues = "https://github.com/nickmccarty/tif2geojson/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "--cov=src/tif2geojson --cov-report=html --cov-report=term-missing"
