@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tif2geojson"
+name = "ortho-masker"
 version = "0.1.0"
-description = "CLI tool to convert TIF files to GeoJSON with automatic mask generation"
+description = "CLI tool to convert TIF files to GeoJSON with automatic mask generation using Meta AI's Segment Anything Model (SAM)"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
@@ -51,16 +51,16 @@ dev = [
 ]
 ml = [
     "torch",
-    "segment_anything @ git+https://github.com/facebookresearch/segment-anything.git@dca509fe793f601edb92606367a655c15ac00fdf",
+    "segment-anything-py",
 ]
 
 [project.scripts]
-tif2geojson = "tif2geojson.cli:main"
+ortho-masker = "ortho-masker.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/nickmccarty/tif2geojson"
-Repository = "https://github.com/nickmccarty/tif2geojson"
-Issues = "https://github.com/nickmccarty/tif2geojson/issues"
+Homepage = "https://github.com/nickmccarty/ortho-masker"
+Repository = "https://github.com/nickmccarty/ortho-masker"
+Issues = "https://github.com/nickmccarty/ortho-masker/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -79,4 +79,4 @@ disallow_untyped_defs = true
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
-addopts = "--cov=src/tif2geojson --cov-report=html --cov-report=term-missing"
+addopts = "--cov=src/ortho-masker --cov-report=html --cov-report=term-missing"

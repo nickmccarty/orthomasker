@@ -5,17 +5,17 @@ A CLI tool that converts TIF files to GeoJSON format with automatic mask generat
 ## Installation
 
 ```bash
-pip install tif2geojson
+pip install ortho-masker
 ```
 
 ## Usage
 
 ```bash
 # Basic usage
-tif2geojson input.tif output.geojson
+ortho-masker input.tif output.geojson
 
 # With options
-tif2geojson input.tif output.geojson --threshold 0.5 --simplify 0.01
+ortho-masker input.tif output.geojson --threshold 0.5 --simplify 0.01
 ```
 
 ### Options
@@ -30,8 +30,8 @@ tif2geojson input.tif output.geojson --threshold 0.5 --simplify 0.01
 ### Setup
 
 ```bash
-git clone https://github.com/nickmccarty/tif2geojson.git
-cd tif2geojson
+git clone https://github.com/nickmccarty/ortho-masker.git
+cd ortho-masker
 pip install -e ".[dev]"
 ```
 

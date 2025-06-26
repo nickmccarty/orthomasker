@@ -1,6 +1,6 @@
 # Machine Learning dependencies
-# PyTorch with CUDA 12.4 support
-torch @ https://download.pytorch.org/whl/cu124/torch-2.6.0%2Bcu124-cp311-cp311-linux_x86_64.whl
+# PyTorch with CUDA 12.5 support
+torch @ https://download.pytorch.org/whl/cu125/torch-2.6.0%2Bcu125-cp311-cp311-linux_x86_64.whl
 
 # Segment Anything Model
-segment_anything @ git+https://github.com/facebookresearch/segment-anything.git@dca509fe793f601edb92606367a655c15ac00fdf
+segment-anything-py

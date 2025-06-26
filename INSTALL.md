@@ -9,7 +9,7 @@ pip install -r requirements.txt
 
 Or install via pip (after publishing):
 ```bash
-pip install tif2geojson
+pip install ortho-masker
 ```
 
 ## Development Installation
@@ -68,5 +68,5 @@ Multiple OpenCV packages are included for maximum compatibility:
 
 Test your installation:
 ```bash
-python -c "import tif2geojson; print('Installation successful!')"
+python -c "import ortho-masker; print('Installation successful!')"
 ```
