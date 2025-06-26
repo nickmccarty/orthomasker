@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/orthomasker/__init__.py
+src/orthomasker/cli.py
+src/orthomasker/converter.py
+src/orthomasker/mask_generator.py
+src/orthomasker.egg-info/PKG-INFO
+src/orthomasker.egg-info/SOURCES.txt
+src/orthomasker.egg-info/dependency_links.txt
+src/orthomasker.egg-info/entry_points.txt
+src/orthomasker.egg-info/requires.txt
+src/orthomasker.egg-info/top_level.txt

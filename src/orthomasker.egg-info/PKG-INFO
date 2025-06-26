@@ -1,0 +1,120 @@
+Metadata-Version: 2.4
+Name: orthomasker
+Version: 0.1.0
+Summary: CLI tool to convert TIF files to GeoJSON with automatic mask generation using Meta AI's Segment Anything Model (SAM)
+Author-email: Nicholas McCarty <nick@upskilled.consulting>
+License: MIT License
+        
+        Copyright (c) 2025 Nicholas McCarty, Upskilled Consulting
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/nickmccarty/orthomasker
+Project-URL: Repository, https://github.com/nickmccarty/orthomasker
+Project-URL: Issues, https://github.com/nickmccarty/orthomasker/issues
+Keywords: gis,geojson,tif,mask,cli
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: click>=8.0.0
+Requires-Dist: GDAL>=3.8.0
+Requires-Dist: geopandas>=1.0.0
+Requires-Dist: matplotlib>=3.10.0
+Requires-Dist: numpy>=2.0.0
+Requires-Dist: opencv-contrib-python>=4.11.0
+Requires-Dist: opencv-python>=4.11.0
+Requires-Dist: opencv-python-headless>=4.11.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: pillow>=11.2.0
+Requires-Dist: rasterio>=1.4.0
+Requires-Dist: shapely>=2.1.0
+Requires-Dist: geojson>=3.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: flake8>=5.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Requires-Dist: openpyxl>=3.1.0; extra == "dev"
+Provides-Extra: ml
+Requires-Dist: torch; extra == "ml"
+Requires-Dist: segment-anything-py; extra == "ml"
+Dynamic: license-file
+
+# TIF to GeoJSON Converter
+
+A CLI tool that converts TIF files to GeoJSON format with automatic mask generation.
+
+## Installation
+
+```bash
+pip install ortho-masker
+```
+
+## Usage
+
+```bash
+# Basic usage
+ortho-masker input.tif output.geojson
+
+# With options
+ortho-masker input.tif output.geojson --threshold 0.5 --simplify 0.01
+```
+
+### Options
+
+- `--threshold`: Threshold for mask generation (default: 0.5)
+- `--simplify`: Simplification tolerance for geometries (default: 0.01)
+- `--band`: Band index to use for mask generation (default: 1)
+- `--help`: Show help message
+
+## Development
+
+### Setup
+
+```bash
+git clone https://github.com/nickmccarty/ortho-masker.git
+cd ortho-masker
+pip install -e ".[dev]"
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Formatting
+
+```bash
+black src/ tests/
+```
+
+## License
+
+MIT License - see LICENSE file for details.
