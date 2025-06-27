@@ -2,14 +2,9 @@
 
 ## Basic Installation
 
-Install the core dependencies:
+Install via pip:
 ```bash
-pip install -r requirements.txt
-```
-
-Or install via pip (after publishing):
-```bash
-pip install ortho-masker
+pip install orthomasker
 ```
 
 ## Development Installation
@@ -49,14 +44,8 @@ pip install -e .[dev,ml]
 
 ## Platform-Specific Notes
 
-### GDAL Installation
-GDAL can be tricky to install. Consider using conda for easier GDAL management:
-```bash
-conda install -c conda-forge gdal
-```
-
 ### PyTorch with CUDA
-The requirements include PyTorch with CUDA 12.4 support. If you need a different CUDA version or CPU-only PyTorch, visit https://pytorch.org/get-started/locally/ for the appropriate installation command.
+The requirements include PyTorch with CUDA 12.5 support. If you need a different CUDA version or CPU-only PyTorch, visit https://pytorch.org/get-started/locally/ for the appropriate installation command.
 
 ### OpenCV
 Multiple OpenCV packages are included for maximum compatibility:
@@ -68,5 +57,5 @@ Multiple OpenCV packages are included for maximum compatibility:
 
 Test your installation:
 ```bash
-python -c "import ortho-masker; print('Installation successful!')"
+python -c "import orthomasker; print('Installation successful!')"
 ```

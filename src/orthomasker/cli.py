@@ -45,6 +45,18 @@ from .converter import TifToGeoJsonConverter
     help="Bounding box (minx miny maxx maxy) in image CRS.",
 )
 @click.option(
+    "--min-area",
+    type=float,
+    default=None,
+    help="Minimum area (in square units of TIF CRS) for output features (optional).",
+)
+@click.option(
+    "--max-area",
+    type=float,
+    default=None,
+    help="Maximum area (in square units of TIF CRS) for output features (optional).",
+)
+@click.option(
     "--verbose", "-v", is_flag=True, help="Enable verbose output."
 )
 def main(
@@ -57,6 +69,8 @@ def main(
     overlap: int,
     class_name: str,
     fixed_bounds: Optional[tuple],
+    min_area: Optional[float],
+    max_area: Optional[float],
     verbose: bool,
 ) -> None:
     """Convert TIF file to GeoJSON with SAM mask generation."""
@@ -69,6 +83,10 @@ def main(
             click.echo(f"Tile size: {tile_size}, Overlap: {overlap}")
             if fixed_bounds:
                 click.echo(f"Fixed bounds: {fixed_bounds}")
+            if min_area:
+                click.echo(f"Min area: {min_area}")
+            if max_area:
+                click.echo(f"Max area: {max_area}")
 
         converter = TifToGeoJsonConverter(
             sam_checkpoint=str(sam_checkpoint),
@@ -77,6 +95,8 @@ def main(
             tile_size=tile_size,
             overlap=overlap,
             class_name=class_name,
+            min_area=min_area,
+            max_area=max_area,
             verbose=verbose,
         )
 

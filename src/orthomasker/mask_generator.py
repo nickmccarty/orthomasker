@@ -20,10 +20,12 @@ class MaskGenerator:
         self,
         sam_checkpoint: str = "sam_vit_h_4b8939.pth",
         model_type: str = "vit_h",
-        confidence_threshold: float = 0.0,  # 0.0 = unfiltered
+        confidence_threshold: float = 0.0,
         tile_size: int = 1024,
         overlap: int = 128,
         class_name: str = "sam_object",
+        min_area: Optional[float] = None,
+        max_area: Optional[float] = None,
         verbose: bool = False,
     ):
         self.sam_checkpoint = sam_checkpoint
@@ -32,6 +34,8 @@ class MaskGenerator:
         self.tile_size = tile_size
         self.overlap = overlap
         self.class_name = class_name
+        self.min_area = min_area
+        self.max_area = max_area
         self.verbose = verbose
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -118,6 +122,13 @@ class MaskGenerator:
                             })
 
         gdf = gpd.GeoDataFrame(results, crs=crs)
+
+        # Area filtering
+        if self.min_area is not None:
+            gdf = gdf[gdf["area"] >= self.min_area]
+        if self.max_area is not None:
+            gdf = gdf[gdf["area"] <= self.max_area]
+
         if geojson_output:
             if self.verbose:
                 print("\n💾 Saving results to GeoJSON...")

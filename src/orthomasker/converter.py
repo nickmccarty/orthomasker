@@ -14,10 +14,12 @@ class TifToGeoJsonConverter:
         self,
         sam_checkpoint: str = "sam_vit_h_4b8939.pth",
         model_type: str = "vit_h",
-        confidence_threshold: float = 0.0,  # 0.0 = unfiltered
+        confidence_threshold: float = 0.0,
         tile_size: int = 1024,
         overlap: int = 128,
         class_name: str = "sam_object",
+        min_area: Optional[float] = None,
+        max_area: Optional[float] = None,
         verbose: bool = False,
     ):
         self.mask_generator = MaskGenerator(
@@ -27,6 +29,8 @@ class TifToGeoJsonConverter:
             tile_size=tile_size,
             overlap=overlap,
             class_name=class_name,
+            min_area=min_area,
+            max_area=max_area,
             verbose=verbose,
         )
 
