@@ -1,37 +1,16 @@
 Metadata-Version: 2.4
 Name: orthomasker
-Version: 0.9.0
+Version: 0.9.1
 Summary: A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON.
 Author-email: Nicholas McCarty <nick@upskilled.consulting>
-License: MIT License
-        
-        Copyright (c) 2025 Nicholas McCarty, Upskilled Consulting
-        
-        Permission is hereby granted, free of charge, to any person obtaining a copy
-        of this software and associated documentation files (the "Software"), to deal
-        in the Software without restriction, including without limitation the rights
-        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-        copies of the Software, and to permit persons to whom the Software is
-        furnished to do so, subject to the following conditions:
-        
-        The above copyright notice and this permission notice shall be included in all
-        copies or substantial portions of the Software.
-        
-        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-        SOFTWARE.
-        
+License: Apache-2.0
 Project-URL: Homepage, https://github.com/nickmccarty/orthomasker
 Project-URL: Repository, https://github.com/nickmccarty/orthomasker
 Project-URL: Issues, https://github.com/nickmccarty/orthomasker/issues
 Keywords: gis,geojson,tif,mask,cli
 Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers
-Classifier: License :: OSI Approved :: MIT License
+Classifier: License :: OSI Approved :: Apache Software License
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
@@ -151,7 +130,7 @@ pip install -e ".[ml,dev]"
 
 ## Acknowledgments
 
-This project leverages [Meta AI’s Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for automatic mask generation, which is faciliated by utilizing [`segment-anything-py`](https://pypi.org/project/segment-anything-py/) as a dependency; many thanks to Wu, Q. et al. for their work!
+This project leverages [Meta AI’s Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for automatic mask generation, which is faciliated by utilizing [`segment-anything-py`](https://pypi.org/project/segment-anything-py/) as a dependency; many thanks to  Qiusheng Wu, et al. for their work!
 
 ## Citations
 
@@ -166,4 +145,4 @@ year={2023}
 
 ## License
 
-MIT License - see LICENSE file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
