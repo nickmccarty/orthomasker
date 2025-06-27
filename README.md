@@ -1,6 +1,6 @@
-# TIF to GeoJSON Converter
+# Raster Feature Extractor
 
-A CLI tool that converts TIF files to GeoJSON format with automatic mask generation.
+A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON.
 
 ## Installation
 
@@ -12,13 +12,18 @@ pip install orthomasker
 
 ```bash
 # Using CLI
-orthomasker your_input_filename.tif your_output_filename.geojson --sam-checkpoint sam_vit_h_4b8939.pth --confidence-threshold 80 --min-area 100 --max-area 10000 --verbose
+orthomasker your_input_filename.tif your_output_filename.geojson \
+    --sam-checkpoint sam_vit_h_4b8939.pth \
+    --confidence-threshold 80 \
+    --min-area 100 \
+    --max-area 10000 \
+    --verbose
 
 # Using Python
-from orthomasker.converter import TifToGeoJsonConverter
+from orthomasker.converter import RasterFeatureExtractor
 
-# Set up the converter (use the path to your .pth file)
-converter = TifToGeoJsonConverter(
+# Set up the extractor (use the path to your .pth file)
+extractor = RasterFeatureExtractor(
     sam_checkpoint="sam_vit_h_4b8939.pth",
     confidence_threshold=80.0,
     min_area=100.0,      # Optional: filter by minimum area
@@ -30,7 +35,7 @@ converter = TifToGeoJsonConverter(
 input_tif = "your_input_filename.tif"
 output_geojson = "your_output_filename.geojson"
 
-converter.convert(input_tif, output_geojson)
+extractor.convert(input_tif, output_geojson)
 ```
 
 ### Options
@@ -52,6 +57,8 @@ converter.convert(input_tif, output_geojson)
 - `--max-area`: Maximum area (in square units of TIF CRS) for output features (optional)
 
 - `--fixed-bounds`: Bounding box (minx, miny, maxx, maxy) in image CRS
+
+- `--merge`: Merge overlapping polygons in output (optional)
 
 - `--verbose`: Enable verbose output
 

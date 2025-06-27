@@ -26,6 +26,7 @@ class MaskGenerator:
         class_name: str = "sam_object",
         min_area: Optional[float] = None,
         max_area: Optional[float] = None,
+        merge: bool = False,
         verbose: bool = False,
     ):
         self.sam_checkpoint = sam_checkpoint
@@ -36,6 +37,7 @@ class MaskGenerator:
         self.class_name = class_name
         self.min_area = min_area
         self.max_area = max_area
+        self.merge = merge
         self.verbose = verbose
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -58,7 +60,7 @@ class MaskGenerator:
             fixed_bounds: Optional (minx, miny, maxx, maxy) bounding box.
 
         Returns:
-            GeoDataFrame with all mask polygons.
+            GeoDataFrame with all (possibly merged) mask polygons.
         """
         results: List[Dict[str, Any]] = []
         start_time = time.time()
@@ -129,6 +131,19 @@ class MaskGenerator:
         if self.max_area is not None:
             gdf = gdf[gdf["area"] <= self.max_area]
 
+        # --- MERGE LOGIC ---
+        if self.merge:
+            # Merge all touching/overlapping polygons into distinct polygons
+            # This will dissolve all geometries into as few polygons as possible
+            dissolved = gdf.dissolve()  # attributes will be lost except geometry
+            # Explode into individual polygons if MultiPolygon
+            merged_gdf = dissolved.explode(index_parts=False).reset_index(drop=True)
+            # Optionally, add class_name and area back
+            merged_gdf["class_name"] = self.class_name
+            merged_gdf["area"] = merged_gdf.geometry.area
+            gdf = merged_gdf
+
+        # Save and/or return
         if geojson_output:
             if self.verbose:
                 print("\n💾 Saving results to GeoJSON...")

@@ -3,7 +3,7 @@ README.md
 pyproject.toml
 src/orthomasker/__init__.py
 src/orthomasker/cli.py
-src/orthomasker/converter.py
+src/orthomasker/feature_extractor.py
 src/orthomasker/mask_generator.py
 src/orthomasker.egg-info/PKG-INFO
 src/orthomasker.egg-info/SOURCES.txt

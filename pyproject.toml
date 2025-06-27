@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "orthomasker"
-version = "0.4.0"
-description = "CLI tool to convert TIF files to GeoJSON with automatic mask generation using Meta AI's Segment Anything Model (SAM)"
+version = "0.8.0"
+description = "A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON."
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [

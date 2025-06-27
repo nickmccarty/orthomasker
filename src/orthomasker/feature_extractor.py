@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 
 from .mask_generator import MaskGenerator
 
-class TifToGeoJsonConverter:
+class RasterFeatureExtractor:
     """
     Converts TIF files to GeoJSON using SAM mask generation.
     """
@@ -20,6 +20,7 @@ class TifToGeoJsonConverter:
         class_name: str = "sam_object",
         min_area: Optional[float] = None,
         max_area: Optional[float] = None,
+        merge: bool = False,
         verbose: bool = False,
     ):
         self.mask_generator = MaskGenerator(
@@ -31,6 +32,7 @@ class TifToGeoJsonConverter:
             class_name=class_name,
             min_area=min_area,
             max_area=max_area,
+            merge=merge,
             verbose=verbose,
         )
 

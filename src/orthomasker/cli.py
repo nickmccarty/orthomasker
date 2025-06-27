@@ -1,11 +1,11 @@
-"""Command line interface for tif2geojson."""
+"""Command line interface for orthomasker."""
 
 import click
 import sys
 from pathlib import Path
 from typing import Optional
 
-from .converter import TifToGeoJsonConverter
+from .feature_extractor import RasterFeatureExtractor
 
 @click.command()
 @click.argument("input_file", type=click.Path(exists=True, path_type=Path))
@@ -59,6 +59,9 @@ from .converter import TifToGeoJsonConverter
 @click.option(
     "--verbose", "-v", is_flag=True, help="Enable verbose output."
 )
+@click.option(
+    "--merge", is_flag=True, help="Merge overlapping polygons in output."
+)
 def main(
     input_file: Path,
     output_file: Path,
@@ -72,6 +75,7 @@ def main(
     min_area: Optional[float],
     max_area: Optional[float],
     verbose: bool,
+    merge: bool,  # CRITICAL ADDITION
 ) -> None:
     """Convert TIF file to GeoJSON with SAM mask generation."""
     try:
@@ -87,8 +91,10 @@ def main(
                 click.echo(f"Min area: {min_area}")
             if max_area:
                 click.echo(f"Max area: {max_area}")
+            if merge:  # New merge status output
+                click.echo("Polygon merging: ENABLED")
 
-        converter = TifToGeoJsonConverter(
+        converter = RasterFeatureExtractor(
             sam_checkpoint=str(sam_checkpoint),
             model_type=model_type,
             confidence_threshold=confidence_threshold,
@@ -97,6 +103,7 @@ def main(
             class_name=class_name,
             min_area=min_area,
             max_area=max_area,
+            merge=merge,  # Must be passed here
             verbose=verbose,
         )
 
