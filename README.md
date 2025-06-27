@@ -12,28 +12,17 @@ pip install orthomasker
 
 ```bash
 # Using CLI
-orthomasker your_input_filename.tif your_output_filename.geojson \
-    --sam-checkpoint sam_vit_h_4b8939.pth \
-    --confidence-threshold 80 \
-    --min-area 100 \
-    --max-area 10000 \
-    --verbose
+orthomasker your_input_filename.tif your_output_filename.geojson
 
 # Using Python
-from orthomasker.converter import RasterFeatureExtractor
-
-# Set up the extractor (use the path to your .pth file)
-extractor = RasterFeatureExtractor(
-    sam_checkpoint="sam_vit_h_4b8939.pth",
-    confidence_threshold=80.0,
-    min_area=100.0,      # Optional: filter by minimum area
-    max_area=10000.0,    # Optional: filter by maximum area
-    verbose=True,
-)
+from orthomasker.feature_extractor import RasterFeatureExtractor
 
 # Provide your own test TIF file (upload or use a sample)
 input_tif = "your_input_filename.tif"
 output_geojson = "your_output_filename.geojson"
+
+# Set up the extractor (use the path to your .pth file)
+extractor = RasterFeatureExtractor()
 
 extractor.convert(input_tif, output_geojson)
 ```
