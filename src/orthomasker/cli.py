@@ -57,6 +57,12 @@ from .feature_extractor import RasterFeatureExtractor
     help="Maximum area (in square units of TIF CRS) for output features (optional).",
 )
 @click.option(
+    "--compactness",
+    type=float,
+    default=None,
+    help="Minimum compactness threshold (0.0-1.0) using Polsby-Popper metric (optional).",
+)
+@click.option(
     "--verbose", "-v", is_flag=True, help="Enable verbose output."
 )
 @click.option(
@@ -74,8 +80,9 @@ def main(
     fixed_bounds: Optional[tuple],
     min_area: Optional[float],
     max_area: Optional[float],
+    compactness: Optional[float],
     verbose: bool,
-    merge: bool,  # CRITICAL ADDITION
+    merge: bool,
 ) -> None:
     """Extract vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM) and export them as GeoJSON."""
     try:
@@ -91,7 +98,9 @@ def main(
                 click.echo(f"Min area: {min_area}")
             if max_area:
                 click.echo(f"Max area: {max_area}")
-            if merge:  # New merge status output
+            if compactness:
+                click.echo(f"Compactness threshold: {compactness}")
+            if merge:
                 click.echo("Polygon merging: ENABLED")
 
         converter = RasterFeatureExtractor(
@@ -103,7 +112,8 @@ def main(
             class_name=class_name,
             min_area=min_area,
             max_area=max_area,
-            merge=merge,  # Must be passed here
+            compactness=compactness,
+            merge=merge,
             verbose=verbose,
         )
 

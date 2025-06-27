@@ -45,11 +45,30 @@ extractor.convert(input_tif, output_geojson)
 
 - `--max-area`: Maximum area (in square units of TIF CRS) for output features (optional)
 
+- `--compactness`: Minimum compactness threshold (0.0–1.0) using Polsby-Popper metric for filtering irregular shapes (optional)
+
 - `--fixed-bounds`: Bounding box (minx, miny, maxx, maxy) in image CRS
 
 - `--merge`: Merge overlapping polygons in output (optional)
 
 - `--verbose`: Enable verbose output
+
+## Compactness Filtering
+
+The `--compactness` option allows you to filter out irregular or elongated shapes by setting a minimum compactness threshold. This uses the Polsby-Popper compactness metric:
+<br>
+`Compactness = (4π × Area) / (Perimeter²)`
+
+Perfect circle: compactness = 1.0
+Square: compactness ≈ 0.785
+Elongated shapes: compactness approaches 0.0
+
+Common threshold values:
+
+0.1: Very permissive (removes only extremely irregular shapes)
+0.3: Moderate filtering (removes highly irregular shapes)
+0.6: Strict filtering (keeps only relatively compact shapes)
+0.8: Very strict (keeps only very round/square shapes)
 
 ## Development
 

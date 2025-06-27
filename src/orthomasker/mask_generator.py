@@ -26,6 +26,7 @@ class MaskGenerator:
         class_name: str = "sam_object",
         min_area: Optional[float] = None,
         max_area: Optional[float] = None,
+        compactness: Optional[float] = None,
         merge: bool = False,
         verbose: bool = False,
     ):
@@ -37,6 +38,7 @@ class MaskGenerator:
         self.class_name = class_name
         self.min_area = min_area
         self.max_area = max_area
+        self.compactness = compactness
         self.merge = merge
         self.verbose = verbose
 
@@ -131,8 +133,28 @@ class MaskGenerator:
         if self.max_area is not None:
             gdf = gdf[gdf["area"] <= self.max_area]
 
+        # Compactness filtering
+        if self.compactness is not None:
+            if self.verbose:
+                print(f"🧮 Calculating compactness metrics...")
+                print(f"📏 Applying compactness threshold: {self.compactness}")
+            
+            # Calculate perimeter and compactness (Polsby-Popper metric)
+            gdf['perimeter'] = gdf['geometry'].length
+            gdf['compactness'] = (4 * np.pi * gdf['area']) / (gdf['perimeter'] ** 2)
+            
+            # Filter based on compactness threshold
+            initial_count = len(gdf)
+            gdf = gdf[gdf['compactness'] >= self.compactness]
+            
+            if self.verbose:
+                filtered_count = len(gdf)
+                print(f"🔍 Compactness filter: {initial_count} → {filtered_count} features")
+
         # --- MERGE LOGIC ---
         if self.merge:
+            if self.verbose:
+                print("🔗 Merging overlapping polygons...")
             # Merge all touching/overlapping polygons into distinct polygons
             # This will dissolve all geometries into as few polygons as possible
             dissolved = gdf.dissolve()  # attributes will be lost except geometry
@@ -141,12 +163,19 @@ class MaskGenerator:
             # Optionally, add class_name and area back
             merged_gdf["class_name"] = self.class_name
             merged_gdf["area"] = merged_gdf.geometry.area
+            
+            # Recalculate compactness for merged polygons if needed
+            if self.compactness is not None:
+                merged_gdf['perimeter'] = merged_gdf['geometry'].length
+                merged_gdf['compactness'] = (4 * np.pi * merged_gdf['area']) / (merged_gdf['perimeter'] ** 2)
+            
             gdf = merged_gdf
 
         # Save and/or return
         if geojson_output:
             if self.verbose:
                 print("\n💾 Saving results to GeoJSON...")
+                print(f"📊 Final feature count: {len(gdf)}")
             gdf.to_file(geojson_output, driver="GeoJSON")
             if self.verbose:
                 print(f"✅ Done. Saved to: {geojson_output}")

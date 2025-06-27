@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "orthomasker"
-version = "0.8.0"
+version = "0.9.0"
 description = "A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON."
 readme = "README.md"
 license = {file = "LICENSE"}

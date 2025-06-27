@@ -20,6 +20,7 @@ class RasterFeatureExtractor:
         class_name: str = "sam_object",
         min_area: Optional[float] = None,
         max_area: Optional[float] = None,
+        compactness: Optional[float] = None,
         merge: bool = False,
         verbose: bool = False,
     ):
@@ -32,6 +33,7 @@ class RasterFeatureExtractor:
             class_name=class_name,
             min_area=min_area,
             max_area=max_area,
+            compactness=compactness,
             merge=merge,
             verbose=verbose,
         )
