@@ -77,7 +77,7 @@ def main(
     verbose: bool,
     merge: bool,  # CRITICAL ADDITION
 ) -> None:
-    """Convert TIF file to GeoJSON with SAM mask generation."""
+    """Extract vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM) and export them as GeoJSON."""
     try:
         if verbose:
             click.echo(f"Processing {input_file}...")

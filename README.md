@@ -64,7 +64,7 @@ pip install -e ".[ml,dev]"
 
 ## Acknowledgments
 
-This project leverages [Meta AI’s Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for automatic mask generation, which is faciliated by utilizing [`segment-anything-py`](https://pypi.org/project/segment-anything-py/) as a dependency; many thanks to Wu, et al. for their work!
+This project leverages [Meta AI’s Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for automatic mask generation, which is faciliated by utilizing [`segment-anything-py`](https://pypi.org/project/segment-anything-py/) as a dependency; many thanks to Wu, Q. et al. for their work!
 
 ## Citations
 
