@@ -59,16 +59,16 @@ The `--compactness` option allows you to filter out irregular or elongated shape
 <br>
 `Compactness = (4π × Area) / (Perimeter²)`
 
-Perfect circle: compactness = 1.0
-Square: compactness ≈ 0.785
-Elongated shapes: compactness approaches 0.0
+- Perfect circle: compactness = 1.0
+- Square: compactness ≈ 0.785
+- Elongated shapes: compactness approaches 0.0
 
 Common threshold values:
 
-0.1: Very permissive (removes only extremely irregular shapes)
-0.3: Moderate filtering (removes highly irregular shapes)
-0.6: Strict filtering (keeps only relatively compact shapes)
-0.8: Very strict (keeps only very round/square shapes)
+- 0.1: Very permissive (removes only extremely irregular shapes)
+- 0.3: Moderate filtering (removes highly irregular shapes)
+- 0.6: Strict filtering (keeps only relatively compact shapes)
+- 0.8: Very strict (keeps only very round/square shapes)
 
 ## Development
 
