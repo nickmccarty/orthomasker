@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: orthomasker
-Version: 0.9.1
+Version: 0.9.4
 Summary: A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON.
 Author-email: Nicholas McCarty <nick@upskilled.consulting>
 License: Apache-2.0
@@ -104,18 +104,19 @@ extractor.convert(input_tif, output_geojson)
 
 The `--compactness` option allows you to filter out irregular or elongated shapes by setting a minimum compactness threshold. This uses the Polsby-Popper compactness metric:
 <br>
+<br>
 `Compactness = (4π × Area) / (Perimeter²)`
 
-Perfect circle: compactness = 1.0
-Square: compactness ≈ 0.785
-Elongated shapes: compactness approaches 0.0
+- Perfect circle: compactness = 1.0
+- Square: compactness ≈ 0.785
+- Elongated shapes: compactness approaches 0.0
 
 Common threshold values:
 
-0.1: Very permissive (removes only extremely irregular shapes)
-0.3: Moderate filtering (removes highly irregular shapes)
-0.6: Strict filtering (keeps only relatively compact shapes)
-0.8: Very strict (keeps only very round/square shapes)
+- 0.1: Very permissive (removes only extremely irregular shapes)
+- 0.3: Moderate filtering (removes highly irregular shapes)
+- 0.6: Strict filtering (keeps only relatively compact shapes)
+- 0.8: Very strict (keeps only very round/square shapes)
 
 ## Development
 

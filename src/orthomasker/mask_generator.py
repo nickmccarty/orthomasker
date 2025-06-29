@@ -155,29 +155,131 @@ class MaskGenerator:
         if self.merge:
             if self.verbose:
                 print("🔗 Merging overlapping polygons...")
-            # Merge all touching/overlapping polygons into distinct polygons
-            # This will dissolve all geometries into as few polygons as possible
-            dissolved = gdf.dissolve()  # attributes will be lost except geometry
-            # Explode into individual polygons if MultiPolygon
-            merged_gdf = dissolved.explode(index_parts=False).reset_index(drop=True)
-            # Optionally, add class_name and area back
-            merged_gdf["class_name"] = self.class_name
-            merged_gdf["area"] = merged_gdf.geometry.area
             
-            # Recalculate compactness for merged polygons if needed
-            if self.compactness is not None:
-                merged_gdf['perimeter'] = merged_gdf['geometry'].length
-                merged_gdf['compactness'] = (4 * np.pi * merged_gdf['area']) / (merged_gdf['perimeter'] ** 2)
+            # Create spatial index for efficient overlap detection
+            from shapely.strtree import STRtree
             
-            gdf = merged_gdf
-
-        # Save and/or return
-        if geojson_output:
+            # Build spatial index
+            geometries = gdf.geometry.tolist()
+            tree = STRtree(geometries)
+            
+            # Find groups of overlapping polygons
+            visited = set()
+            groups = []
+            
+            for idx, geom in enumerate(geometries):
+                if idx in visited:
+                    continue
+                
+                # Find all geometries that intersect with current geometry
+                group_indices = set([idx])
+                candidates = list(tree.query(geom))
+                
+                # Check actual intersection (not just bounding box overlap)
+                for candidate_idx in candidates:
+                    if candidate_idx != idx and geom.intersects(geometries[candidate_idx]):
+                        group_indices.add(candidate_idx)
+                
+                # Recursively find all connected overlapping polygons
+                queue = list(group_indices - {idx})
+                while queue:
+                    current_idx = queue.pop(0)
+                    if current_idx in visited:
+                        continue
+                    
+                    current_geom = geometries[current_idx]
+                    new_candidates = list(tree.query(current_geom))
+                    
+                    for new_candidate_idx in new_candidates:
+                        if (new_candidate_idx not in group_indices and 
+                            new_candidate_idx not in visited and
+                            current_geom.intersects(geometries[new_candidate_idx])):
+                            group_indices.add(new_candidate_idx)
+                            queue.append(new_candidate_idx)
+                
+                groups.append(list(group_indices))
+                visited.update(group_indices)
+            
+            # Create merged polygons with mean confidence scores
+            merged_features = []
+            
+            for group in groups:
+                if len(group) == 1:
+                    # Single polygon - keep as is
+                    row = gdf.iloc[group[0]]
+                    merged_features.append({
+                        'geometry': row.geometry,
+                        'class_name': row.class_name,
+                        'area': row.area,
+                        'confidence': row.confidence,
+                        'compactness': row.get('compactness', None)
+                    })
+                else:
+                    # Multiple overlapping polygons - merge and calculate mean confidence
+                    group_gdf = gdf.iloc[group]
+                    
+                    # Calculate mean confidence score
+                    mean_confidence = group_gdf['confidence'].mean()
+                    
+                    # Merge geometries
+                    merged_geom = group_gdf.geometry.unary_union
+                    
+                    # Handle MultiPolygon case - explode into individual polygons
+                    if merged_geom.geom_type == 'MultiPolygon':
+                        for poly in merged_geom.geoms:
+                            area = poly.area
+                            feature_dict = {
+                                'geometry': poly,
+                                'class_name': self.class_name,
+                                'area': round(area, 2),
+                                'confidence': round(mean_confidence, 1)
+                            }
+                            
+                            # Add compactness if it was calculated
+                            if self.compactness is not None:
+                                perimeter = poly.length
+                                compactness_val = (4 * np.pi * area) / (perimeter ** 2)
+                                feature_dict['compactness'] = compactness_val
+                            
+                            merged_features.append(feature_dict)
+                    else:
+                        # Single merged polygon
+                        area = merged_geom.area
+                        feature_dict = {
+                            'geometry': merged_geom,
+                            'class_name': self.class_name,
+                            'area': round(area, 2),
+                            'confidence': round(mean_confidence, 1)
+                        }
+                        
+                        # Add compactness if it was calculated
+                        if self.compactness is not None:
+                            perimeter = merged_geom.length
+                            compactness_val = (4 * np.pi * area) / (perimeter ** 2)
+                            feature_dict['compactness'] = compactness_val
+                        
+                        merged_features.append(feature_dict)
+            
+            # Create new GeoDataFrame with merged features
+            gdf = gpd.GeoDataFrame(merged_features, crs=gdf.crs)
+            
             if self.verbose:
-                print("\n💾 Saving results to GeoJSON...")
-                print(f"📊 Final feature count: {len(gdf)}")
+                print(f"🔗 Merged into {len(gdf)} features")
+
+        # SAVE OUTPUT (this was missing!)
+        if self.verbose:
+            elapsed = time.time() - start_time
+            print(f"⏱️ Processing completed in {elapsed:.1f} seconds")
+            print(f"📊 Generated {len(gdf)} mask features")
+
+        # Save to GeoJSON if output path provided
+        if geojson_output:
+            # Remove None values from compactness column if it exists
+            if 'compactness' in gdf.columns:
+                gdf = gdf.dropna(subset=['compactness'])
+            
             gdf.to_file(geojson_output, driver="GeoJSON")
             if self.verbose:
-                print(f"✅ Done. Saved to: {geojson_output}")
-                print(f"⏱️ Total time: {time.time() - start_time:.2f} seconds")
+                print(f"💾 Saved output to: {geojson_output}")
+
         return gdf

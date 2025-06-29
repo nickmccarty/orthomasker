@@ -57,6 +57,7 @@ extractor.convert(input_tif, output_geojson)
 
 The `--compactness` option allows you to filter out irregular or elongated shapes by setting a minimum compactness threshold. This uses the Polsby-Popper compactness metric:
 <br>
+<br>
 `Compactness = (4π × Area) / (Perimeter²)`
 
 - Perfect circle: compactness = 1.0
