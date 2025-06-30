@@ -24,6 +24,7 @@ class MaskGenerator:
         tile_size: int = 1024,
         overlap: int = 128,
         class_name: str = "sam_object",
+        class_id: Optional[int] = None,
         min_area: Optional[float] = None,
         max_area: Optional[float] = None,
         compactness: Optional[float] = None,
@@ -36,6 +37,7 @@ class MaskGenerator:
         self.tile_size = tile_size
         self.overlap = overlap
         self.class_name = class_name
+        self.class_id = class_id
         self.min_area = min_area
         self.max_area = max_area
         self.compactness = compactness
@@ -117,13 +119,19 @@ class MaskGenerator:
                         for poly, _ in shapes(mask["segmentation"].astype(np.uint8), transform=tile_transform):
                             polygon = sg.shape(poly)
                             area = polygon.area
-                            results.append({
+                            feature_dict = {
                                 "id": idx,
                                 "class_name": self.class_name,
                                 "area": round(area, 2),
                                 "confidence": round(confidence, 1),
                                 "geometry": polygon,
-                            })
+                            }
+                            
+                            # Add class_id if provided
+                            if self.class_id is not None:
+                                feature_dict["class_id"] = self.class_id
+                            
+                            results.append(feature_dict)
 
         gdf = gpd.GeoDataFrame(results, crs=crs)
 
@@ -207,13 +215,19 @@ class MaskGenerator:
                 if len(group) == 1:
                     # Single polygon - keep as is
                     row = gdf.iloc[group[0]]
-                    merged_features.append({
+                    feature_dict = {
                         'geometry': row.geometry,
                         'class_name': row.class_name,
                         'area': row.area,
                         'confidence': row.confidence,
                         'compactness': row.get('compactness', None)
-                    })
+                    }
+                    
+                    # Preserve class_id if it exists
+                    if 'class_id' in row and row['class_id'] is not None:
+                        feature_dict['class_id'] = row['class_id']
+                    
+                    merged_features.append(feature_dict)
                 else:
                     # Multiple overlapping polygons - merge and calculate mean confidence
                     group_gdf = gdf.iloc[group]
@@ -235,6 +249,10 @@ class MaskGenerator:
                                 'confidence': round(mean_confidence, 1)
                             }
                             
+                            # Add class_id if it was set
+                            if self.class_id is not None:
+                                feature_dict['class_id'] = self.class_id
+                            
                             # Add compactness if it was calculated
                             if self.compactness is not None:
                                 perimeter = poly.length
@@ -251,6 +269,10 @@ class MaskGenerator:
                             'area': round(area, 2),
                             'confidence': round(mean_confidence, 1)
                         }
+                        
+                        # Add class_id if it was set
+                        if self.class_id is not None:
+                            feature_dict['class_id'] = self.class_id
                         
                         # Add compactness if it was calculated
                         if self.compactness is not None:

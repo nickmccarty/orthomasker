@@ -1,8 +1,9 @@
 Metadata-Version: 2.4
 Name: orthomasker
-Version: 0.9.4
+Version: 0.9.5
 Summary: A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON.
-Author-email: Nicholas McCarty <nick@upskilled.consulting>
+Author: Nicholas McCarty
+Author-email: nick@upskilled.consulting
 License: Apache-2.0
 Project-URL: Homepage, https://github.com/nickmccarty/orthomasker
 Project-URL: Repository, https://github.com/nickmccarty/orthomasker

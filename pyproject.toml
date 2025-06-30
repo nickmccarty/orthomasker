@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "orthomasker"
-version = "0.9.4"
+version = "0.9.5"
 description = "A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM), and exporting them as GeoJSON."
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {text = "Apache-2.0"}
 authors = [
-    {name = "Nicholas McCarty", email = "nick@upskilled.consulting"}
+    {name = "Nicholas McCarty"},
+    {email = "nick@upskilled.consulting"}
 ]
 keywords = ["gis", "geojson", "tif", "mask", "cli"]
 classifiers = [

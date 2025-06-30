@@ -38,6 +38,9 @@ from .feature_extractor import RasterFeatureExtractor
     "--class-name", type=str, default="sam_object", help="Class label for output features."
 )
 @click.option(
+    "--class-id", type=int, default=None, help="Class ID for output features (optional)."
+)
+@click.option(
     "--fixed-bounds",
     nargs=4,
     type=float,
@@ -77,6 +80,7 @@ def main(
     tile_size: int,
     overlap: int,
     class_name: str,
+    class_id: Optional[int],
     fixed_bounds: Optional[tuple],
     min_area: Optional[float],
     max_area: Optional[float],
@@ -92,6 +96,9 @@ def main(
             click.echo(f"Model type: {model_type}")
             click.echo(f"Confidence threshold: {confidence_threshold}")
             click.echo(f"Tile size: {tile_size}, Overlap: {overlap}")
+            click.echo(f"Class name: {class_name}")
+            if class_id is not None:
+                click.echo(f"Class ID: {class_id}")
             if fixed_bounds:
                 click.echo(f"Fixed bounds: {fixed_bounds}")
             if min_area:
@@ -110,6 +117,7 @@ def main(
             tile_size=tile_size,
             overlap=overlap,
             class_name=class_name,
+            class_id=class_id,
             min_area=min_area,
             max_area=max_area,
             compactness=compactness,
