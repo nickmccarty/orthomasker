@@ -16,7 +16,7 @@ Note: Installation using `pip` will fail in environments lacking a previous inst
 
 ## Demo
 
-<a href="https://colab.research.google.com/drive/1Nro0xTRwxnCi-penjbj2DCc9MKI8FbKg?usp=sharing#offline=true&sandboxMode=true">
+<a href="https://colab.research.google.com/drive/1Yvp9eETLlqrcVZdYu6AP4-viLV-xFdYU?usp=sharing#offline=true&sandboxMode=true">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
