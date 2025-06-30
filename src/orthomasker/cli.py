@@ -38,7 +38,7 @@ from .feature_extractor import RasterFeatureExtractor
     "--class-name", type=str, default="sam_object", help="Class label for output features."
 )
 @click.option(
-    "--class-id", type=int, default=None, help="Class ID for output features (optional)."
+    "--class-id", type=int, default=None, help="Class ID (e.g., 1) for output features (optional)."
 )
 @click.option(
     "--fixed-bounds",
@@ -88,7 +88,7 @@ def main(
     verbose: bool,
     merge: bool,
 ) -> None:
-    """Extract vector features from geospatial raster (TIF) files using the Segment Anything Model (SAM) and export them as GeoJSON."""
+    """Extract vector features from geospatial raster (TIF) files using Meta AI's Segment Anything Model (SAM) and export them as GeoJSON."""
     try:
         if verbose:
             click.echo(f"Processing {input_file}...")

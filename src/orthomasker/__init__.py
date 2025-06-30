@@ -1,6 +1,6 @@
 """TIF to GeoJSON converter with SAM-based automatic mask generation."""
 
-__version__ = "0.9.5"
+__version__ = "0.9.6"
 __author__ = "Nicholas McCarty"
 __email__ = "nick@upskilled.consulting"
 
