@@ -16,7 +16,7 @@ Note: Installation using `pip` will fail in environments lacking a previous inst
 
 ## Demo
 
-<a href="https://colab.research.google.com/drive/1Yvp9eETLlqrcVZdYu6AP4-viLV-xFdYU?usp=sharing#offline=true&sandboxMode=true">
+<a href="https://colab.research.google.com/drive/1Yvp9eETLlqrcVZdYu6AP4-viLV-xFdYU?usp=sharing#offline=true&sandboxMode=true" target="_blank">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
@@ -78,6 +78,7 @@ The `--compactness` option allows you to filter out irregular or elongated shape
 - Square: compactness ≈ 0.785
 - Elongated shapes: compactness approaches 0.0
 
+<br>
 Common threshold values:
 
 - 0.1: Very permissive (removes only extremely irregular shapes)
@@ -87,7 +88,7 @@ Common threshold values:
 
 ## Acknowledgments
 
-This project leverages [Meta AI’s Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for automatic mask generation, which is faciliated by utilizing [`segment-anything-py`](https://pypi.org/project/segment-anything-py/) as a dependency; many thanks to  Qiusheng Wu, et al. for their work!
+This project leverages [Meta AI’s Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for automatic mask generation; many thanks to Alexander Kirillov, et al. for their work!
 
 ## Citations
 

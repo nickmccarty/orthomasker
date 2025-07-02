@@ -2,10 +2,21 @@
 
 ## Basic Installation
 
-Install via pip:
 ```bash
 pip install orthomasker
 ```
+
+Note: Installation using `pip` will fail in environments lacking a previous installation of the `GDAL` library, which is notoriously difficult to install using `pip`. Instead, using `conda` is generally recommended:
+
+- `conda create -n your_env_name python=3.10 gdal -c conda-forge`
+- `conda activate your_env_name`
+- `pip install orthomasker`
+
+## Demo
+
+<a href="https://colab.research.google.com/drive/1Yvp9eETLlqrcVZdYu6AP4-viLV-xFdYU?usp=sharing#offline=true&sandboxMode=true">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
 ## Development Installation
 
