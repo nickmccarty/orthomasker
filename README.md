@@ -1,6 +1,9 @@
 # Raster Feature Extractor
 
 A CLI tool and Python library for extracting vector features from geospatial raster (TIF) files using Meta AI's Segment Anything Model (SAM), and exporting them as GeoJSON.
+<br>
+<br>
+[![PyPI Downloads](https://static.pepy.tech/badge/orthomasker)](https://pepy.tech/projects/orthomasker)
 
 ## Installation
 
